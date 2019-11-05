@@ -12,6 +12,9 @@ using MyShop.WebUI.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyShop.Core.Contracts;
+using MyShop.Core.Models;
+using MyShop.DataAccess.InMemory;
 
 namespace MyShop.WebUI
 {
@@ -27,6 +30,7 @@ namespace MyShop.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IRepository<Product>, InMemoryRepository<Product>>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

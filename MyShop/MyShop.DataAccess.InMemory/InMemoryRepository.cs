@@ -1,15 +1,16 @@
-﻿using MyShop.Core.Models;
+﻿
+using MyShop.Core.Contracts;
+using MyShop.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Text;
 
 namespace MyShop.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity     
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
     {
-        ObjectCache cache =  MemoryCache.Default;
+        ObjectCache cache = MemoryCache.Default;
         List<T> items;
         string className;
 
@@ -17,7 +18,7 @@ namespace MyShop.DataAccess.InMemory
         {
             className = typeof(T).Name;
             items = cache[className] as List<T>;
-            if(items == null)
+            if (items == null)
             {
                 items = new List<T>();
             }
@@ -37,7 +38,7 @@ namespace MyShop.DataAccess.InMemory
         {
             T tToupdate = items.Find(i => i.Id == t.Id);
 
-            if(tToupdate != null)
+            if (tToupdate != null)
             {
                 tToupdate = t;
             }
