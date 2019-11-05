@@ -33,7 +33,7 @@ namespace MyShop.DataAccess.InMemory
 
         public void Update(Product product)
         {
-            Product productToUpdate = products.Find(p => p.Id == product.Id);
+            Product productToUpdate = products.FirstOrDefault(p => p.Id == product.Id);
 
             if(productToUpdate != null)
             {
@@ -48,15 +48,20 @@ namespace MyShop.DataAccess.InMemory
         public Product Find(string Id)
         {
             Product product = products.Find(p => p.Id == Id);
-
+        
+         
+            
             if (product != null)
             {
                 return product;
             }
             else
             {
+                //Console.WriteLine(Id + " " + products[1].Id);
                 throw new Exception("Product Not Found");
             }
+
+
         }
 
         public IQueryable<Product> Collection()
